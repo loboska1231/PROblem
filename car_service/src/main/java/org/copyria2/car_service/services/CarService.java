@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.copyria2.car_service.entity.CarEntity;
 import org.copyria2.car_service.mapper.CarMapper;
 import org.copyria2.car_service.repository.CarRepository;
+import org.copyria2.carservice.api.event.model.CarDeletedEventPayload;
+import org.copyria2.carservice.api.event.producer.ICarEventsProducer;
 import org.copyria2.carservice.api.rest.model.CarResponseDto;
+import org.copyria2.carservice.api.rest.model.CreateCarDto;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ import java.util.List;
 public class CarService {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
-
+    private final ICarEventsProducer carEventsProducer;
     public List<CarResponseDto> findAll(String brand, String model) {
         List<CarEntity> cars ;
         if(brand!=null && model !=null ){
@@ -29,8 +32,15 @@ public class CarService {
     public CarResponseDto findById(Integer id) {
         return carMapper.toResponseDto(carRepository.findById(id).get());
     }
+    public CarResponseDto createCar(CreateCarDto carDto){
+        CarEntity car = carMapper.toEntity(carDto);
+        var saved = carRepository.save(car);
+        return carMapper.toResponseDto(saved);
+    }
     public void DeleteCar(Integer id) {
         carRepository.deleteById(id);
         //
+        CarDeletedEventPayload event = new CarDeletedEventPayload().withCarId(id);
+        carEventsProducer.onCarDeletedEvent(event);
     }
 }

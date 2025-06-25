@@ -43,5 +43,5 @@ components:
       type: object
       properties:
         carId:
-          type: string
+          type: integer
           description: Deleted car ID

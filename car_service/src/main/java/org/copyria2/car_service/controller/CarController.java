@@ -16,7 +16,7 @@ public class CarController implements CarApi {
     private final CarService carService;
     @Override
     public ResponseEntity<CarResponseDto> createCar(CreateCarDto createCarDto) {
-        return null;
+        return ResponseEntity.ok(carService.createCar(createCarDto));
     }
 
     @Override

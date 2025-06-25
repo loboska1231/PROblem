@@ -5,10 +5,13 @@ info:
   version: "1.0.0"
 
 servers:
-  - url: "https://localhost:8081"
-    description: "Local Car Service"
 
+    - url: "https://localhost:8081"
+      description: "Local Car Service"
+security:
+  - BearerAuth: []
 paths:
+
 
   /api/v1/cars:
     get:
@@ -116,8 +119,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
 components:
+
   schemas:
 
     CreateCar:
@@ -170,11 +173,8 @@ components:
         - timestamp
         - details
 
-#   security:
-#     - BearerAuth: []
-#   components:
-#     securitySchemes:
-#       BearerAuth:
-#         type: http
-#         scheme: bearer
-#         bearerFormat: JWT
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

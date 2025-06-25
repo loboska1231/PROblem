@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 
 info:
   title: "CopyRIA API"
@@ -44,10 +44,7 @@ paths:
           required: false
           schema:
             type: string
-            enum:
-              - USD
-              - EUR
-              - UAH
+
       responses:
         "200":
           description: "OK"
@@ -87,7 +84,7 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
+            format: int32
         - name: "curr"
           in: "query"
           required: false
@@ -112,7 +109,7 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
+            format: int32
 
       responses:
         "200":
@@ -128,7 +125,7 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
+            format: int32
 
       requestBody:
         required: true
@@ -195,13 +192,10 @@ components:
         car:
           type: object
           properties:
-            producer:
+            brand:
               type: string
             model:
               type: string
-            year:
-              type: number
-              format: int32
     CreateOrder:
       type: object
       properties:
@@ -222,14 +216,11 @@ components:
           minimum: 0
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - UAH
+
         car:
           type: object
           properties:
-            producer:
+            brand:
               type: string
               minLength: 3
               maxLength: 70
@@ -237,15 +228,9 @@ components:
               type: string
               minLength: 1
               maxLength: 70
-            year:
-              type: number
-              format: int32
-              minimum: 1896
-              maximum: 2025
           required:
-            - producer
+            - brand
             - model
-            - year
       required:
         - city
         - region
@@ -274,10 +259,6 @@ components:
           minimum: 0
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - UAH
       required:
         - city
         - region
