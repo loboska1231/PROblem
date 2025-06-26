@@ -1,8 +1,39 @@
 databaseChangeLog:
   - changeSet:
-      id: "1.0.1"
+      id: "1.0.2"
       author: borya
       changes:
+        - createTable:
+            tableName: views
+            columns:
+              - column:
+                  name: order_id
+                  type: INT
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: views_pk
+                    nullable: false
+              - column:
+                  name: total_views
+                  type: INT
+              - column:
+                  name: views_per_day
+                  type: INT
+              - column:
+                  name: views_per_week
+                  type: INT
+              - column:
+                  name: views_per_month
+                  type: INT
+              - column:
+                  name: last_day
+                  type: DATE
+              - column:
+                  name: last_week_start
+                  type: DATE
+              - column:
+                  name: last_month_start
+                  type: DATE
         - createTable:
             tableName: orders
             columns:
@@ -53,6 +84,19 @@ databaseChangeLog:
               - column:
                   name: avg_price
                   type: INT
+              - column:
+                  name: views_order_id
+                  type: INT
+
+
+        - addForeignKeyConstraint:
+            baseTableName: orders
+            baseColumnNames: views_order_id
+            referencedTableName: views
+            referencedColumnNames: order_id
+            constraintName: fk_orders_views
+
+
         - createTable:
             tableName: "changes"
             columns:
@@ -76,5 +120,4 @@ databaseChangeLog:
               - column:
                   name: sale
                   type: INT
-
 

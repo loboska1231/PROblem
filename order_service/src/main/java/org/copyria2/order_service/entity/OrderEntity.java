@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,10 +26,10 @@ public class OrderEntity {
     private String status;
     private String ownerEmail;
     private int editedTimes;
-    private int totalViews; // prem
-    private int viewsPerDay; //prem
-    private int viewsPerWeek; //prem
-    private int viewsPerMonth; //prem
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "views_order_id")
+    private OrderView views; // prem
     private BigDecimal avgPriceByRegion; //prem
     private BigDecimal avgPrice; //prem
 }

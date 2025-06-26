@@ -2,6 +2,8 @@ package org.copyria2.order_service.repository;
 
 import org.copyria2.order_service.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -16,4 +18,10 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     List<OrderEntity> findAllByPriceGreaterThanEqual(BigDecimal price);
     List<OrderEntity> findAllByRegionAndPriceGreaterThanEqualAndPriceLessThanEqual(String city, BigDecimal minPrice, BigDecimal maxPrice);
     List<OrderEntity> findAllByCityAndPriceGreaterThanEqualAndPriceLessThanEqual(String city, BigDecimal priceAfter, BigDecimal priceBefore);
+    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.price IS NOT NULL")
+    BigDecimal findAveragePrice();
+
+    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.region = :region AND o.price IS NOT NULL")
+    BigDecimal findAveragePriceByRegion(@Param("region") String region);
+
 }

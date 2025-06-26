@@ -83,7 +83,7 @@ paths:
           schema:
             type: integer
             format: int32
-        - name: "curr"
+        - name: "currency"
           in: "query"
           required: false
           schema:
@@ -195,14 +195,18 @@ components:
           type: number
         currency:
           type: string
-        viewsTotal:
-          type: integer
-        viewsPerDay:
-          type: integer
-        viewsWeek:
-          type: integer
-        viewsMonth:
-          type: integer
+        views:
+          type: object
+          properties:
+            viewsTotal:
+              type: integer
+            viewsPerDay:
+              type: integer
+            viewsWeek:
+              type: integer
+            viewsMonth:
+              type: integer
+
         avgPriceByRegion:
           type: number
         avgPrice:
@@ -276,9 +280,3 @@ components:
           minimum: 0
         currency:
           type: string
-      required:
-        - city
-        - region
-        - owner_email
-        - price
-        - currency

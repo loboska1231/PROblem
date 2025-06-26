@@ -5,7 +5,7 @@
     "realm": [
       {
         "id": "d25d4caa-a1b6-48ba-8082-e18f0df77c53",
-        "name": "SHOP_MANAGER",
+        "name": "CAR_MANAGER",
         "description": "",
         "composite": false,
         "clientRole": false,
@@ -14,11 +14,20 @@
       },
       {
         "id": "5ed012f7-9ec8-405a-a283-1883e72e14a5",
-        "name": "SUPPLY_MANAGER",
+        "name": "CAR_SELLER",
         "description": "",
         "composite": false,
         "clientRole": false,
         "containerId": "62c2979b-a0d1-47dc-843f-629145e2f33a",
+        "attributes": {}
+      },
+      {
+        "id": "5ed012f7-9ec8-405a-a283-1883e72e14b6",
+        "name": "ADMIN",
+        "description": "",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "62c2979b-a0d1-47dc-843f-629145e2f33b",
         "attributes": {}
       },
       {
@@ -35,10 +44,10 @@
   "users": [
     {
       "id": "61e80165-d55c-486e-ad15-e7f83986eda7",
-      "username": "adam.smith.supplier",
+      "username": "adam.smith.seller",
       "firstName": "Adam",
       "lastName": "Smith",
-      "email": "adam.smith.supplier@ecommerce.owu.com.ua",
+      "email": "adam.smith.seller@ecommerce.owu.com.ua",
       "emailVerified": false,
       "enabled": true,
       "totp": false,
@@ -46,21 +55,20 @@
         {
           "id": "bb0fe68d-20e4-4d66-8b30-24d0ae6bb950",
           "type": "password",
-          "value": "supplier"
+          "value": "seller"
         }
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "SUPPLY_MANAGER",
+        "CAR_SELLER",
         "USER"
       ],
       "notBefore": 0,
       "groups": [],
       "attributes": {
         "user_assigned_shop_ids": [
-          "1",
-          "2"
+          "1"
         ]
       }
     },
@@ -83,7 +91,8 @@
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "SHOP_MANAGER",
+        "CAR_MANAGER",
+        "CAR_SELLER",
         "USER"
       ],
       "notBefore": 0,
@@ -93,7 +102,44 @@
           "1",
           "2",
           "3",
-          "4"
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "id": "e5c8f449-8b61-4477-a109-977746acb083",
+      "username": "kate.smith.admin",
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "kate.smith.admin@ecommerce.owu.com.ua",
+      "emailVerified": false,
+      "enabled": true,
+      "totp": false,
+      "credentials": [
+        {
+          "id": "a0163918-daad-48be-beff-df738edd47bf",
+          "type": "password",
+          "value": "admin"
+        }
+      ],
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "ADMIN",
+        "CAR_MANAGER",
+        "CAR_SELLER",
+        "USER"
+      ],
+      "notBefore": 0,
+      "groups": [],
+      "attributes": {
+        "user_assigned_shop_ids": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
         ]
       }
     },
