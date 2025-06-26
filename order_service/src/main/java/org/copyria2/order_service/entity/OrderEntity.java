@@ -19,16 +19,16 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private BigDecimal price;
-    private BigDecimal avgPrice; //prem
-    private BigDecimal avgPriceByRegion; //prem
     private String currency;
     private String city;
     private String region;
+    private String status;
     private String ownerEmail;
     private int editedTimes;
-    private String status;
     private int totalViews; // prem
     private int viewsPerDay; //prem
     private int viewsPerWeek; //prem
     private int viewsPerMonth; //prem
+    private BigDecimal avgPriceByRegion; //prem
+    private BigDecimal avgPrice; //prem
 }

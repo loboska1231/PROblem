@@ -7,4 +7,14 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/zenwave/src/main/java/org/copyria2/order_service/api/event" isTestSource="false" generated="true" />
     </content>
   </component>
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping />
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
 </module>

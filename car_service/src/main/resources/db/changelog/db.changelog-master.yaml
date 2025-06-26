@@ -7,13 +7,13 @@ databaseChangeLog:
             tableName: cars
             columns:
               - column:
+                  name: id
+                  type: INT
                   autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: pk_cars
-                  name: id
-                  type: INT
               - column:
                   name: brand
                   type: VARCHAR(255)

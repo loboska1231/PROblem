@@ -7,13 +7,13 @@ databaseChangeLog:
             tableName: orders
             columns:
               - column:
+                  name: id
+                  type: INT
                   autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: orders_pk
-                  name: id
-                  type: INT
               - column:
                   name: price
                   type: BIGINT
@@ -33,5 +33,48 @@ databaseChangeLog:
                   name: owner_email
                   type: VARCHAR(255)
               - column:
-                  name: edit_times
-                  type: bigint
+                  name: edited_times
+                  type: INT
+              - column:
+                  name: total_views
+                  type: INT
+              - column:
+                  name: views_per_day
+                  type: INT
+              - column:
+                  name: views_per_week
+                  type: INT
+              - column:
+                  name: views_per_month
+                  type: INT
+              - column:
+                  name: avg_price_by_region
+                  type: INT
+              - column:
+                  name: avg_price
+                  type: INT
+        - createTable:
+            tableName: "changes"
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: changes_pk
+              - column:
+                  name: currency
+                  type: VARCHAR(4)
+              - column:
+                  name: base_currency
+                  type: VARCHAR(4)
+              - column:
+                  name: buy
+                  type: INT
+              - column:
+                  name: sale
+                  type: INT
+
+

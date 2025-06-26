@@ -27,7 +27,7 @@ spring:
           order-service-client:
             authorization-grant-type: client_credentials
             client-id: "order-service-client"
-            client-secret: "EGaAO6ennRN5vc5H9nrMCQFF4qU8f967PCCCHs1ojxzB2cmxXhR2DoRTp4qqwcSY"
+            client-secret: "mYZahmjIkzXPfwfhliokc7Lf3D9s8Mjt"
             provider: keycloak
       resourceserver:
         jwt:

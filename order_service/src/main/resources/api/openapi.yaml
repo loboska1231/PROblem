@@ -51,9 +51,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/ResponseOrder"
+                $ref: "#/components/schemas/ResponseObj"
     post:
       tags:
         - Orders
@@ -155,6 +153,33 @@ components:
           scopes:
             offline_access: offline access
   schemas:
+
+    ResponseChange:
+      type: object
+      properties:
+        ccy:
+          type: string
+        base_ccy:
+          type: string
+        buy:
+          type: number
+          format: double
+        sale:
+          type: number
+          format: double
+
+    ResponseObj:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResponseOrder"
+        changes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResponseChange"
+
     ResponseOrder:
       type: object
       properties:
@@ -172,7 +197,7 @@ components:
           type: string
         viewsTotal:
           type: integer
-        viewsToday:
+        viewsPerDay:
           type: integer
         viewsWeek:
           type: integer

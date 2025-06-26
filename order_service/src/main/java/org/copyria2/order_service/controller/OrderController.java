@@ -2,9 +2,11 @@ package org.copyria2.order_service.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.copyria2.order_service.client.rest.model.CreateOrderDto;
+import org.copyria2.order_service.client.rest.model.ResponseObjDto;
 import org.copyria2.order_service.client.rest.model.ResponseOrderDto;
 
 import org.copyria2.order_service.client.rest.model.UpdateOrderDto;
+
 import org.copyria2.order_service.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +31,7 @@ public class OrderController implements OrdersApi {
     }
 
     @Override
-    public ResponseEntity<List<ResponseOrderDto>> getOrders(String city, String region, BigDecimal minPrice, BigDecimal maxPrice, String currency) {
+    public ResponseEntity<ResponseObjDto> getOrders(String city, String region, BigDecimal minPrice, BigDecimal maxPrice, String currency) {
         return ResponseEntity.ok(orderService.getOrders(city,region,minPrice,maxPrice,currency));
     }
 

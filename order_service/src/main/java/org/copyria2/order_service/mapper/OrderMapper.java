@@ -3,6 +3,8 @@ package org.copyria2.order_service.mapper;
 import org.copyria2.order_service.client.rest.model.*;
 import org.copyria2.order_service.client.rest.model.CreateOrderCarDto;
 import org.copyria2.order_service.client.rest.model.CreateOrderDto;
+import org.copyria2.order_service.client.rest.model.ResponseChangeDto;
+import org.copyria2.order_service.client.rest.model.ResponseObjDto;
 import org.copyria2.order_service.client.rest.model.ResponseOrderCarDto;
 import org.copyria2.order_service.client.rest.model.ResponseOrderDto;
 import org.copyria2.order_service.client.rest.model.UpdateOrderDto;
@@ -10,6 +12,8 @@ import org.copyria2.order_service.entity.OrderEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+
+import java.util.List;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 @Mapper(componentModel = SPRING)
@@ -19,9 +23,6 @@ public interface OrderMapper {
     OrderEntity ToEntity(CreateOrderDto order);
     @Mapping(target = "car", source = "carDto")
     ResponseOrderDto ToResponseOrderDto(OrderEntity order,ResponseOrderCarDto  carDto);
-    CreateCarDto ToCreateCarDto(CreateOrderCarDto carDto,Integer orderId);
-    ResponseOrderCarDto ToOrderCarResponseDto(CreateOrderCarDto carDto);
-    ResponseOrderCarDto ToOrderCarResponseDto(CarResponseDto carDto);
 //    @Mapping(ignore = true, target = "id")
 //    @Mapping(target="status", constant = "UPDATED")
 //    @Mapping(target = "editedTimes", ignore = true)
@@ -41,4 +42,7 @@ public interface OrderMapper {
       order.setEditedTimes(t);
       return order;
     }
+    @Mapping(target = "orders", source = "orders")
+    @Mapping(target = "changes", source = "changes")
+    ResponseObjDto toResponseObj(List<ResponseOrderDto> orders, List<ResponseChangeDto> changes);
 }
