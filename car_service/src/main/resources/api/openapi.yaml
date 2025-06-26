@@ -119,10 +119,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /api/v1/cars/byOrder/{id}:
+    get:
+      tags:
+        - Car
+      summary: "Get car by order ID"
+      operationId: "getCarByOrderId"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: "Car found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CarResponse"
+        '404':
+          description: "Car not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
-
   schemas:
-
     CreateCar:
       type: object
       required:
@@ -137,7 +161,7 @@ components:
           type: string
           minLength: 1
           maxLength: 40
-        order_id:
+        orderId:
           type: integer
           format: int32
           description: "ID of the associated order (optional)"
@@ -152,7 +176,7 @@ components:
           type: string
         model:
           type: string
-        order_id:
+        orderId:
           type: integer
           format: int32
 

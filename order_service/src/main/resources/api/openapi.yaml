@@ -97,7 +97,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ResponseOrderPremium"
+                $ref: "#/components/schemas/ResponseOrder"
     delete:
       tags:
         - Orders
@@ -155,25 +155,6 @@ components:
           scopes:
             offline_access: offline access
   schemas:
-    ResponseOrderPremium:
-      allOf:
-        - $ref: "#/components/schemas/ResponseOrder"
-        - type: object
-          properties:
-            viewCount:
-              type: integer
-            viewsToday:
-              type: integer
-            viewsWeek:
-              type: integer
-            viewsMonth:
-              type: integer
-            avgPriceRegion:
-              type: number
-            avgPriceCity:
-              type: number
-            avgPriceCountry:
-              type: number
     ResponseOrder:
       type: object
       properties:
@@ -189,6 +170,18 @@ components:
           type: number
         currency:
           type: string
+        viewsTotal:
+          type: integer
+        viewsToday:
+          type: integer
+        viewsWeek:
+          type: integer
+        viewsMonth:
+          type: integer
+        avgPriceByRegion:
+          type: number
+        avgPrice:
+          type: number
         car:
           type: object
           properties:
@@ -216,7 +209,6 @@ components:
           minimum: 0
         currency:
           type: string
-
         car:
           type: object
           properties:

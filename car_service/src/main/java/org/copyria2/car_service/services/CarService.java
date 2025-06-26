@@ -43,4 +43,8 @@ public class CarService {
         CarDeletedEventPayload event = new CarDeletedEventPayload().withCarId(id);
         carEventsProducer.onCarDeletedEvent(event);
     }
+
+    public CarResponseDto getCarByOrderId(Integer id) {
+        return carMapper.toResponseDto(carRepository.findByOrderId(id));
+    }
 }

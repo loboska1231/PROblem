@@ -26,7 +26,6 @@ public class OrderEntity {
     private String region;
     private String ownerEmail;
     private int editedTimes;
-    private Integer carId;
     private String status;
     private int totalViews; // prem
     private int viewsPerDay; //prem

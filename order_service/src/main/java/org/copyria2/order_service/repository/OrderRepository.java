@@ -14,4 +14,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     List<OrderEntity> findAllByPriceGreaterThanEqualAndPriceLessThanEqual(BigDecimal price, BigDecimal price2);
     List<OrderEntity> findAllByPriceLessThanEqual(BigDecimal price);
     List<OrderEntity> findAllByPriceGreaterThanEqual(BigDecimal price);
+    List<OrderEntity> findAllByRegionAndPriceGreaterThanEqualAndPriceLessThanEqual(String city, BigDecimal minPrice, BigDecimal maxPrice);
+    List<OrderEntity> findAllByCityAndPriceGreaterThanEqualAndPriceLessThanEqual(String city, BigDecimal priceAfter, BigDecimal priceBefore);
 }

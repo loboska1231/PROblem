@@ -43,7 +43,7 @@
         <api-package>org.copyria2.order_service.client.rest</api-package>
 
         <zenwave.version>1.7.1</zenwave.version>
-        <event-api-package>org.copyria2.order_service.api.event</event-api-package>
+        <event-api-package>org.copyria2.order_service.api</event-api-package>
         <asyncapi-spec-file>../car_service/src/main/resources/api/asyncapi.yaml</asyncapi-spec-file>
     </properties>
 
@@ -201,10 +201,10 @@
                             <generateModels>true</generateModels>
 
                             <typeMappings>
-                                number=Double
+                                number=BigDecimal
                             </typeMappings>
                             <importMappings>
-                                Double=java.math.Double
+                                BigDecimal=java.math.BigDecimal
                             </importMappings>
 
                             <configOptions>

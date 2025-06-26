@@ -10,4 +10,5 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<CarEntity, Integer> {
     List<CarEntity> findAllByBrand(String brand);
     List<CarEntity> findAllByBrandAndModel(String brand, String model);
+    CarEntity findByOrderId(Integer orderId);
 }
