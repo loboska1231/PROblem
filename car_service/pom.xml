@@ -38,7 +38,7 @@
         <springdoc-openapi-web-ui.version>2.8.6</springdoc-openapi-web-ui.version>
 
         <zenwave.version>1.7.1</zenwave.version>
-        <event-api-package>org.copyria2.carservice.api.event</event-api-package>
+        <event-api-package>org.copyria2.car_service.api.event</event-api-package>
         <asyncapi-spec-file>src/main/resources/api/asyncapi.yaml</asyncapi-spec-file>
     </properties>
     <dependencyManagement>

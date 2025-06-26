@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1.0.0"
+      author: borya
+      changes:
+        - createTable:
+            tableName: cars
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_cars
+                  name: id
+                  type: INT
+              - column:
+                  name: brand
+                  type: VARCHAR(255)
+              - column:
+                  name: model
+                  type: VARCHAR(255)
+              - column:
+                  name: order_id
+                  type: INT

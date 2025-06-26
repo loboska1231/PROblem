@@ -1,11 +1,12 @@
 package org.copyria2.car_service.services;
 
 import lombok.RequiredArgsConstructor;
+import org.copyria2.car_service.api.event.model.CarDeletedEventPayload;
+import org.copyria2.car_service.api.event.producer.ICarEventsProducer;
 import org.copyria2.car_service.entity.CarEntity;
 import org.copyria2.car_service.mapper.CarMapper;
 import org.copyria2.car_service.repository.CarRepository;
-import org.copyria2.carservice.api.event.model.CarDeletedEventPayload;
-import org.copyria2.carservice.api.event.producer.ICarEventsProducer;
+
 import org.copyria2.carservice.api.rest.model.CarResponseDto;
 import org.copyria2.carservice.api.rest.model.CreateCarDto;
 

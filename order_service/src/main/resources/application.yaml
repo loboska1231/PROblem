@@ -2,7 +2,7 @@ spring:
   application:
     name: OrderService
   datasource:
-    url: jdbc:postgresql://database:5432/db
+    url: jdbc:postgresql://localhost:5432/db
     username: sql
     password: sql
   jpa:
@@ -22,7 +22,7 @@ spring:
       client:
         provider:
           keycloak:
-            token-uri: "http://localhost:9090/realms/copyria_realm/protocol/openid-connect/token"
+            token-uri: "http://localhost:9090/realms/copyria/protocol/openid-connect/token"
         registration:
           order-service-client:
             authorization-grant-type: client_credentials
@@ -45,8 +45,6 @@ spring:
         on-car-deleted-event-in-0:
           destination: copyria.car.event.v1.car-deleted-events
           group: order-service
-
-
 app:
   privat:
     url: "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"

@@ -7,7 +7,7 @@ spring:
         jwt:
           issuer-uri: "http://localhost:9090/realms/copyria"
   datasource:
-    url: jdbc:postgresql://database:5432/db
+    url: jdbc:postgresql://localhost:5432/db
     username: sql
     password: sql
   cloud:
@@ -17,11 +17,9 @@ spring:
         binder:
           brokers: localhost:9092
           auto-create-topics: true
-
       bindings:
         on-car-deleted-event-out-0:
           destination: copyria.car.event.v1.car-deleted-events
-
 app:
   apis:
     car-service:
