@@ -2,7 +2,7 @@ spring:
   application:
     name: OrderService
   datasource:
-    url: jdbc:postgresql://localhost:5432/db
+    url: jdbc:postgresql://127.0.0.1:5432/db
     username: sql
     password: sql
   jpa:
@@ -22,7 +22,7 @@ spring:
       client:
         provider:
           keycloak:
-            token-uri: "http://localhost:9090/realms/copyria/protocol/openid-connect/token"
+            token-uri: "http://127.0.0.1:9090/realms/copyria/protocol/openid-connect/token"
         registration:
           order-service-client:
             authorization-grant-type: client_credentials
@@ -31,13 +31,13 @@ spring:
             provider: keycloak
       resourceserver:
         jwt:
-          issuer-uri: "http://localhost:9090/realms/copyria"
+          issuer-uri: "http://127.0.0.1:9090/realms/copyria"
   cloud:
     stream:
       default-binder: kafka
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: 127.0.0.1:9092
           auto-create-topics: true
       function:
         definition: on-car-deleted-event
@@ -61,6 +61,6 @@ app:
     url: "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"
   apis:
     car-service:
-      base-url: "http://localhost:8080/"
+      base-url: "http://127.0.0.1:8080/"
 server:
   port: 8081
