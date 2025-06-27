@@ -26,8 +26,8 @@ spring:
         registration:
           order-service-client:
             authorization-grant-type: client_credentials
-            client-id: "order-service-client"
-            client-secret: mYZahmjIkzXPfwfhliokc7Lf3D9s8Mjt
+            client-id: "order-service-client" 
+            client-secret: ${secret}
             provider: keycloak
       resourceserver:
         jwt:
@@ -48,8 +48,10 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: suskovboris@gmail.com
+    username: suskovboris@gmail.com 
+  #  username: suskovboris@gmail.com ${mail-username}
     password: umrugquaanzrhzku
+    # password: umrugquaanzrhzku ${mail-pass}
     properties:
       mail:
         smtp:
