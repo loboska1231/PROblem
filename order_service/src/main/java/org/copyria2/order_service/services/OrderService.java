@@ -29,7 +29,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-//@Slf4j
+@Slf4j
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ChangeRepository changeRepository;
@@ -74,31 +74,26 @@ public class OrderService {
         if(!dto.getCurrency().equals("USD") && !dto.getCurrency().equals("EUR") && !dto.getCurrency().equals("UAH")){
             return new ResponseOrderDto() ;
         }
-
         OrderEntity order = orderMapper.ToEntity(dto);
-
-        order.setAvgPrice(orderRepository.findAveragePrice());
-        order.setAvgPriceByRegion(orderRepository.findAveragePriceByRegion(order.getRegion()));
+        order.setAvgPrice(orderRepository.findAveragePrice(order.getBrand(),order.getModel()));
+        order.setAvgPriceByRegion(orderRepository.findAveragePriceByRegion(order.getRegion(),order.getBrand(),order.getModel()));
+        // считает до n-1 --->>> order[0]+order[1] +order[2] ...+ order[n-1] без order[n]
+        // если n = 0 то null
+        // n =1 , avgPrice = order.getPrice()
+        log.info("avgPrice : {}", order.getAvgPrice());
+        log.info("avgPriceByRegion : {}", order.getAvgPriceByRegion());
         OrderEntity save = orderRepository.save(order);
         orderViewService.incrementView(save.getId());
         OrderView views = orderViewRepository.findById(save.getId()).get();
         save = orderMapper.updateOrderEntityViews(save, views);
+
         var car = dto.getCar();
         var carDto = carMapper.ToCreateCarDto(car, save.getId());
         carApi.createCar(carDto);
-//        orderRepository // ddos
-//                .findAll().stream()
-//                .filter(orderEntity -> {
-//                    var orderCar = carApi.getCarByOrderId(orderEntity.getId());
-//                    return orderCar.getBrand().equals(car.getBrand())
-//                            && orderCar.getModel().equals(car.getModel());
-//                })
-//                .map(orderEntity -> converter(order,"USD"))
-//                .toList();
-//        order.setAvgPrice();
+
         return orderMapper
                 .ToResponseOrderDto(save,
-                        carMapper.ToOrderCarResponseDto(car),
+                        carMapper.ToOrderCarResponseDto(order.getBrand(), order.getModel()),
                         orderViewMapper.toDto(views)
                 );
     }

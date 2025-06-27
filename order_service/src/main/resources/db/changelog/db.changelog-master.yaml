@@ -64,6 +64,12 @@ databaseChangeLog:
                   name: owner_email
                   type: VARCHAR(255)
               - column:
+                  name: brand
+                  type: VARCHAR(255)
+              - column:
+                  name: model
+                  type: VARCHAR(255)
+              - column:
                   name: edited_times
                   type: INT
               - column:

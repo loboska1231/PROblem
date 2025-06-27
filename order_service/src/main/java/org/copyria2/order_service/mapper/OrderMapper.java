@@ -22,6 +22,8 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 public interface OrderMapper {
     @Mapping(target = "status", constant = "CREATED")
     @Mapping(target = "editedTimes", constant = "1")
+    @Mapping(target = "brand", source = "car.brand")
+    @Mapping(target = "model", source = "car.model")
     OrderEntity ToEntity(CreateOrderDto order);
     @Mapping(target = "car", source = "carDto")
     @Mapping(target = "views", source = "viewsDto")
@@ -38,6 +40,8 @@ public interface OrderMapper {
     @Mapping(ignore = true, target ="avgPrice")
     @Mapping(ignore = true, target ="avgPriceByRegion")
     @Mapping(ignore = true, target ="views")
+    @Mapping(ignore = true, target ="brand")
+    @Mapping(ignore = true, target ="model")
     @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
     OrderEntity updateOrderEntity(@MappingTarget OrderEntity order, UpdateOrderDto updateOrderDto);
     @AfterMapping

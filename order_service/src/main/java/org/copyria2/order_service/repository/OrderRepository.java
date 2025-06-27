@@ -18,10 +18,14 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     List<OrderEntity> findAllByPriceGreaterThanEqual(BigDecimal price);
     List<OrderEntity> findAllByRegionAndPriceGreaterThanEqualAndPriceLessThanEqual(String city, BigDecimal minPrice, BigDecimal maxPrice);
     List<OrderEntity> findAllByCityAndPriceGreaterThanEqualAndPriceLessThanEqual(String city, BigDecimal priceAfter, BigDecimal priceBefore);
-    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.price IS NOT NULL")
-    BigDecimal findAveragePrice();
+    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.brand = :brand AND o.model = :model AND o.price IS NOT NULL")
+    BigDecimal findAveragePrice(@Param("brand") String brand, @Param("model") String model);
 
-    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.region = :region AND o.price IS NOT NULL")
-    BigDecimal findAveragePriceByRegion(@Param("region") String region);
+    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.region = :region AND o.brand = :brand AND o.model = :model AND o.price IS NOT NULL")
+    BigDecimal findAveragePriceByRegion(@Param("region") String region, @Param("brand") String brand, @Param("model") String model);
+
+    @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.city = :city AND o.brand = :brand AND o.model = :model AND o.price IS NOT NULL")
+    BigDecimal findAveragePriceByCity(@Param("city") String city, @Param("brand") String brand, @Param("model") String model);
+
 
 }

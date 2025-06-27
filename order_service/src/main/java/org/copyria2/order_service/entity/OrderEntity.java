@@ -27,6 +27,8 @@ public class OrderEntity {
     private String ownerEmail;
     private int editedTimes;
 
+    private String brand;
+    private String model;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "views_order_id")
     private OrderView views; // prem
