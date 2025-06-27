@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: "1.0.2"
+      id: "1.0.4"
       author: borya
       changes:
         - createTable:
@@ -65,18 +65,6 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: edited_times
-                  type: INT
-              - column:
-                  name: total_views
-                  type: INT
-              - column:
-                  name: views_per_day
-                  type: INT
-              - column:
-                  name: views_per_week
-                  type: INT
-              - column:
-                  name: views_per_month
                   type: INT
               - column:
                   name: avg_price_by_region

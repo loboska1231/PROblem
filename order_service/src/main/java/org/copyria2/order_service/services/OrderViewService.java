@@ -11,25 +11,25 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 public class OrderViewService {
-    private OrderViewRepository viewRepository;
+    private final OrderViewRepository viewRepository;
 
     public void incrementView(Integer orderId) {
         LocalDate today = LocalDate.now();
         LocalDate weekStart = today.with(DayOfWeek.MONDAY);
         LocalDate monthStart = today.withDayOfMonth(1);
 
-        OrderView view = viewRepository.findById(orderId).orElseGet(() -> {
-            OrderView v = new OrderView();
-            v.setOrderId(orderId);
-            v.setViewsTotal(0);
-            v.setViewsPerDay(0);
-            v.setViewsWeek(0);
-            v.setViewsMonth(0);
-            v.setLastDay(today);
-            v.setLastWeekStart(weekStart);
-            v.setLastMonthStart(monthStart);
-            return v;
-        });
+        OrderView view = viewRepository
+                .findById(orderId)
+                .orElseGet(() -> OrderView.builder()
+                        .orderId(orderId)
+                        .viewsTotal(0)
+                        .viewsPerDay(0)
+                        .viewsWeek(0)
+                        .viewsMonth(0)
+                        .lastDay(today)
+                        .lastWeekStart(weekStart)
+                        .lastMonthStart(monthStart).build()
+                );
 
         if (!today.equals(view.getLastDay())) {
             view.setViewsPerDay(0);

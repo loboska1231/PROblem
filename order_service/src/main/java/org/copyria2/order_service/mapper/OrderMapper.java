@@ -10,6 +10,7 @@ import org.copyria2.order_service.client.rest.model.ResponseOrderDto;
 import org.copyria2.order_service.client.rest.model.ResponseOrderViewsDto;
 import org.copyria2.order_service.client.rest.model.UpdateOrderDto;
 import org.copyria2.order_service.entity.OrderEntity;
+import org.copyria2.order_service.entity.OrderView;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 @Mapper(componentModel = SPRING)
 public interface OrderMapper {
-    @Mapping(target = "status", constant = "CREATE")
+    @Mapping(target = "status", constant = "CREATED")
     @Mapping(target = "editedTimes", constant = "1")
     OrderEntity ToEntity(CreateOrderDto order);
     @Mapping(target = "car", source = "carDto")
@@ -28,6 +29,9 @@ public interface OrderMapper {
     @Mapping(target = "orders", source = "orders")
     @Mapping(target = "changes", source = "changes")
     ResponseObjDto toResponseObj(List<ResponseOrderDto> orders, List<ResponseChangeDto> changes);
+    @Mapping(target ="views")
+    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
+    OrderEntity updateOrderEntityViews(@MappingTarget OrderEntity order, OrderView views);
     @Mapping(ignore = true, target = "id")
     @Mapping(target="status", constant = "UPDATED")
     @Mapping(target = "editedTimes", ignore = true)

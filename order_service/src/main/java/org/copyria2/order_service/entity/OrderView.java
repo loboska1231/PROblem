@@ -18,11 +18,13 @@ public class OrderView {
 
     @Id
     private Integer orderId;
-
+    @Column(name="total_views")
     private Integer viewsTotal;
 
     private Integer viewsPerDay;
+    @Column(name="views_per_week")
     private Integer viewsWeek;
+    @Column(name="views_per_month")
     private Integer viewsMonth;
 
     private LocalDate lastDay;

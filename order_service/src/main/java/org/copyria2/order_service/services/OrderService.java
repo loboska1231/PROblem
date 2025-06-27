@@ -2,6 +2,7 @@ package org.copyria2.order_service.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.copyria2.order_service.client.rest.api.CarApi;
 import org.copyria2.order_service.client.rest.model.*;
 import org.copyria2.order_service.client.rest.model.ResponseChangeDto;
@@ -28,6 +29,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+//@Slf4j
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ChangeRepository changeRepository;
@@ -73,15 +75,27 @@ public class OrderService {
             return new ResponseOrderDto() ;
         }
 
-        var order = orderMapper.ToEntity(dto);
+        OrderEntity order = orderMapper.ToEntity(dto);
+
         order.setAvgPrice(orderRepository.findAveragePrice());
         order.setAvgPriceByRegion(orderRepository.findAveragePriceByRegion(order.getRegion()));
-        orderViewService.incrementView(order.getId());
-        OrderView views = orderViewRepository.findById(order.getId()).get();
-        var save = orderRepository.save(order);
+        OrderEntity save = orderRepository.save(order);
+        orderViewService.incrementView(save.getId());
+        OrderView views = orderViewRepository.findById(save.getId()).get();
+        save = orderMapper.updateOrderEntityViews(save, views);
         var car = dto.getCar();
         var carDto = carMapper.ToCreateCarDto(car, save.getId());
         carApi.createCar(carDto);
+//        orderRepository // ddos
+//                .findAll().stream()
+//                .filter(orderEntity -> {
+//                    var orderCar = carApi.getCarByOrderId(orderEntity.getId());
+//                    return orderCar.getBrand().equals(car.getBrand())
+//                            && orderCar.getModel().equals(car.getModel());
+//                })
+//                .map(orderEntity -> converter(order,"USD"))
+//                .toList();
+//        order.setAvgPrice();
         return orderMapper
                 .ToResponseOrderDto(save,
                         carMapper.ToOrderCarResponseDto(car),
@@ -118,7 +132,7 @@ public class OrderService {
         }).toList();
 
         List<ResponseOrderDto> ordersDtos = orders.stream()
-                .filter(order->order.getStatus().equals("ACTIVE") || order.getStatus().equals("UPDATED"))
+                .filter(order->order.getStatus().equals("ACTIVE") || order.getStatus().equals("UPDATED") || order.getStatus().equals("CREATED"))
                 .map(order -> {
                     var car = carApi.getCarByOrderId(order.getId());
                     ResponseOrderCarDto carDto = carMapper.ToOrderCarResponseDto(car);
@@ -145,6 +159,17 @@ public class OrderService {
                                     carMapper.ToOrderCarResponseDto(car),
                                     orderViewMapper.toDto(views)
                                     );
+                }).get();
+    }
+    @Transactional
+    public OrderEntity updateOrderViews(Integer id, OrderView views){
+        return orderRepository.findById(id)
+                .map(order -> {
+                    orderMapper.updateOrderEntityViews(order, views);
+                    orderViewService.incrementView(order.getId());
+                    OrderView orderViews = orderViewRepository.findById(order.getId()).get();
+                    order.setViews(orderViews);
+                    return order;
                 }).get();
     }
 
