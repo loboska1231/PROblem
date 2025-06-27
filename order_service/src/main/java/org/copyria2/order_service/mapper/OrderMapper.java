@@ -1,7 +1,5 @@
 package org.copyria2.order_service.mapper;
 
-import org.copyria2.order_service.client.rest.model.*;
-import org.copyria2.order_service.client.rest.model.CreateOrderCarDto;
 import org.copyria2.order_service.client.rest.model.CreateOrderDto;
 import org.copyria2.order_service.client.rest.model.ResponseChangeDto;
 import org.copyria2.order_service.client.rest.model.ResponseObjDto;
@@ -21,19 +19,19 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 @Mapper(componentModel = SPRING)
 public interface OrderMapper {
     @Mapping(target = "status", constant = "CREATED")
-    @Mapping(target = "editedTimes", constant = "1")
     @Mapping(target = "brand", source = "car.brand")
     @Mapping(target = "model", source = "car.model")
     OrderEntity ToEntity(CreateOrderDto order);
     @Mapping(target = "car", source = "carDto")
     @Mapping(target = "views", source = "viewsDto")
     ResponseOrderDto ToResponseOrderDto(OrderEntity order, ResponseOrderCarDto  carDto, ResponseOrderViewsDto viewsDto);
+    @Mapping(target ="views")
+    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
+    OrderEntity updateOrderViews(@MappingTarget OrderEntity order, OrderView views);
     @Mapping(target = "orders", source = "orders")
     @Mapping(target = "changes", source = "changes")
     ResponseObjDto toResponseObj(List<ResponseOrderDto> orders, List<ResponseChangeDto> changes);
-    @Mapping(target ="views")
-    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
-    OrderEntity updateOrderEntityViews(@MappingTarget OrderEntity order, OrderView views);
+
     @Mapping(ignore = true, target = "id")
     @Mapping(target="status", constant = "UPDATED")
     @Mapping(target = "editedTimes", ignore = true)
@@ -44,6 +42,7 @@ public interface OrderMapper {
     @Mapping(ignore = true, target ="model")
     @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
     OrderEntity updateOrderEntity(@MappingTarget OrderEntity order, UpdateOrderDto updateOrderDto);
+
     @AfterMapping
     default void incrementEditedTimes(@MappingTarget OrderEntity order) {
         int current = order.getEditedTimes();

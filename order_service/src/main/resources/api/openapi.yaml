@@ -229,10 +229,6 @@ components:
           type: string
           minLength: 1
           maxLength: 70
-        owner_email:
-          type: string
-          minLength: 6
-          maxLength: 70
         price:
           type: number
           minimum: 0

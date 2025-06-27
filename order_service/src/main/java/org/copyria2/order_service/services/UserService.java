@@ -38,4 +38,13 @@ public class UserService {
         List<String> roles = (List<String>)  attributes.getOrDefault("roles", List.<String>of());
         return roles.contains("PREMIUM");
     }
+    public String getEmail(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        String attributes = jwt.getClaim("email");
+        if(attributes == null) {
+            return "";
+        }
+        return attributes;
+    }
 }

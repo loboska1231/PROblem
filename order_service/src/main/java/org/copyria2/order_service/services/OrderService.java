@@ -4,13 +4,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.copyria2.order_service.client.rest.api.CarApi;
-import org.copyria2.order_service.client.rest.model.*;
 import org.copyria2.order_service.client.rest.model.ResponseChangeDto;
 import org.copyria2.order_service.client.rest.model.CreateOrderDto;
 import org.copyria2.order_service.client.rest.model.ResponseObjDto;
 import org.copyria2.order_service.client.rest.model.ResponseOrderCarDto;
 import org.copyria2.order_service.client.rest.model.ResponseOrderDto;
 import org.copyria2.order_service.client.rest.model.UpdateOrderDto;
+import org.copyria2.order_service.dto.MailDto;
 import org.copyria2.order_service.entity.OrderEntity;
 import org.copyria2.order_service.entity.OrderView;
 import org.copyria2.order_service.mapper.CarMapper;
@@ -37,6 +37,7 @@ public class OrderService {
 
     private final OrderViewService orderViewService;
     private final UserService userService;
+    private final MailService mailService;
 
     private final OrderMapper orderMapper;
     private final ChangeMapper changeMapper;
@@ -82,6 +83,16 @@ public class OrderService {
         if(!dto.getCurrency().equals("USD") && !dto.getCurrency().equals("EUR") && !dto.getCurrency().equals("UAH")){
             return new ResponseOrderDto() ;
         }
+        String email = userService.getEmail();
+        log.info("email: {}", email);
+        boolean check = orderRepository.existsByOwnerEmail(email);
+        log.info("check: {}", check);
+        if(
+                !userService.isPremium()
+                && check
+        ){
+            return new ResponseOrderDto() ;
+        }
         OrderEntity order = orderMapper.ToEntity(dto);
         order.setAvgPrice(orderRepository.findAveragePrice(order.getBrand(),order.getModel()));
         order.setAvgPriceByRegion(orderRepository.findAveragePriceByRegion(order.getRegion(),order.getBrand(),order.getModel()));
@@ -90,20 +101,26 @@ public class OrderService {
         // n =1 , avgPrice = order.getPrice()
         log.info("avgPrice : {}", order.getAvgPrice());
         log.info("avgPriceByRegion : {}", order.getAvgPriceByRegion());
+        order.setOwnerEmail(userService.getEmail());
         OrderEntity save = orderRepository.save(order);
         orderViewService.incrementView(save.getId());
         OrderView views = orderViewRepository.findById(save.getId()).get();
-        save = orderMapper.updateOrderEntityViews(save, views);
+        save = orderMapper.updateOrderViews(save, views);
 
         var car = dto.getCar();
         var carDto = carMapper.ToCreateCarDto(car, save.getId());
         carApi.createCar(carDto);
-
-        return orderMapper
+        ResponseOrderDto response = orderMapper
                 .ToResponseOrderDto(save,
                         carMapper.ToOrderCarResponseDto(order.getBrand(), order.getModel()),
                         orderViewMapper.toDto(views)
                 );
+        mailService.sendEmail(MailDto.builder()
+                .to(order.getOwnerEmail())
+                .title("Order Created")
+                .message("order : "+ response)
+                .build());
+        return response;
     }
     public ResponseObjDto getOrders(String city, String region, BigDecimal minPrice, BigDecimal maxPrice, String currency){
         List<OrderEntity> orders;
@@ -164,6 +181,7 @@ public class OrderService {
                     var car = carApi.getCarByOrderId(order.getId());
                     orderViewService.incrementView(order.getId());
                     OrderView views = orderViewRepository.findById(order.getId()).get();
+
                     return orderMapper
                             .ToResponseOrderDto(order,
                                     carMapper.ToOrderCarResponseDto(car),
@@ -175,23 +193,33 @@ public class OrderService {
     public OrderEntity updateOrderViews(Integer id, OrderView views){
         return orderRepository.findById(id)
                 .map(order -> {
-                    orderMapper.updateOrderEntityViews(order, views);
+                    orderMapper.updateOrderViews(order, views);
                     orderViewService.incrementView(order.getId());
                     OrderView orderViews = orderViewRepository.findById(order.getId()).get();
                     order.setViews(orderViews);
                     return order;
                 }).get();
     }
-
+    @Transactional
     public void updateOrderStatus(Integer id,String status) {
         orderRepository.findById(id).ifPresent(order -> {
             if(order.getEditedTimes() !=3){
                 order.setStatus(status);
+                mailService.sendEmail(MailDto.builder()
+                        .to(order.getOwnerEmail())
+                        .title("Order Status updated")
+                        .message("order status : "+ status)
+                        .build());
             }
             else{
                 order.setStatus("NonActive");
-                // mail
+                mailService.sendEmail(MailDto.builder()
+                        .to(order.getOwnerEmail())
+                        .title("Order Status updated")
+                        .message("order status : "+ "NonActive")
+                        .build());
             }
+
         });
     }
     public OrderEntity getOrderByCarId(Integer carId){

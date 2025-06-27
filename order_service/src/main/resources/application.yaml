@@ -27,7 +27,7 @@ spring:
           order-service-client:
             authorization-grant-type: client_credentials
             client-id: "order-service-client"
-            client-secret: "mYZahmjIkzXPfwfhliokc7Lf3D9s8Mjt"
+            client-secret: mYZahmjIkzXPfwfhliokc7Lf3D9s8Mjt
             provider: keycloak
       resourceserver:
         jwt:
@@ -45,6 +45,17 @@ spring:
         on-car-deleted-event-in-0:
           destination: copyria.car.event.v1.car-deleted-events
           group: order-service
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: suskovboris@gmail.com
+    password: umrugquaanzrhzku
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 app:
   privat:
     url: "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"

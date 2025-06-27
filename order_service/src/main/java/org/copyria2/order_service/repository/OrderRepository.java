@@ -27,5 +27,5 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     @Query("SELECT AVG(o.price) FROM OrderEntity o WHERE o.city = :city AND o.brand = :brand AND o.model = :model AND o.price IS NOT NULL")
     BigDecimal findAveragePriceByCity(@Param("city") String city, @Param("brand") String brand, @Param("model") String model);
 
-
+    boolean existsByOwnerEmail(String email);
 }
