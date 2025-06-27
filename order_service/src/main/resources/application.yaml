@@ -50,8 +50,8 @@ spring:
     port: 587
     username: suskovboris@gmail.com 
   #  username: suskovboris@gmail.com ${mail-username}
-    password: umrugquaanzrhzku
-    # password: umrugquaanzrhzku ${mail-pass}
+    password: ...
+    # password: ... ${mail-pass}
     properties:
       mail:
         smtp:
