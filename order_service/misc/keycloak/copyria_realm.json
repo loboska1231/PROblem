@@ -4,6 +4,15 @@
   "roles": {
     "realm": [
       {
+        "id": "premium-role-id",
+        "name": "PREMIUM",
+        "description": "Premium account access",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "62c2979b-a0d1-47dc-843f-629145e2f44t",
+        "attributes": {}
+      },
+      {
         "id": "d25d4caa-a1b6-48ba-8082-e18f0df77c53",
         "name": "CAR_MANAGER",
         "description": "",
@@ -93,7 +102,8 @@
       "realmRoles": [
         "CAR_MANAGER",
         "CAR_SELLER",
-        "USER"
+        "USER",
+        "PREMIUM"
       ],
       "notBefore": 0,
       "groups": [],
@@ -129,7 +139,8 @@
         "ADMIN",
         "CAR_MANAGER",
         "CAR_SELLER",
-        "USER"
+        "USER",
+        "PREMIUM"
       ],
       "notBefore": 0,
       "groups": [],

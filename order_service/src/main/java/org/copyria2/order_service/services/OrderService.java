@@ -34,7 +34,10 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ChangeRepository changeRepository;
     private final OrderViewRepository orderViewRepository;
+
     private final OrderViewService orderViewService;
+    private final UserService userService;
+
     private final OrderMapper orderMapper;
     private final ChangeMapper changeMapper;
     private final OrderViewMapper orderViewMapper;
@@ -54,7 +57,12 @@ public class OrderService {
         if(currency != null &&(currency.equals("USD") || currency.equals("EUR") || currency.equals("UAH")) ) {
             order = converter(order,currency);
         }
-
+        log.info("isPremium acc: {}", userService.isPremium());
+        if(!userService.isPremium()) {
+            views = null;
+            order.setAvgPrice(null);
+            order.setAvgPriceByRegion(null);
+        }
         return orderMapper
                 .ToResponseOrderDto(order,
                         carMapper.ToOrderCarResponseDto(car),
@@ -123,6 +131,7 @@ public class OrderService {
             ){
                 order = converter(order,currency);
             }
+
             return order;
         }).toList();
 
@@ -133,6 +142,12 @@ public class OrderService {
                     ResponseOrderCarDto carDto = carMapper.ToOrderCarResponseDto(car);
                     orderViewService.incrementView(order.getId());
                     OrderView views = orderViewRepository.findById(order.getId()).get();
+                    if(!userService.isPremium()) {
+                        views = null;
+                        order.setAvgPrice(null);
+                        order.setAvgPriceByRegion(null);
+                        log.info("isPremium: {}",  userService.isPremium());
+                    }
                     return orderMapper.ToResponseOrderDto(order, carDto, orderViewMapper.toDto(views));
                 }).toList();
         List<ResponseChangeDto> changes = changeRepository.findAll().stream().map(changeMapper::toChangeDto).toList();

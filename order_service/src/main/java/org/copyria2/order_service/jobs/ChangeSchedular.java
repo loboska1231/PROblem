@@ -26,7 +26,7 @@ public class ChangeSchedular {
     private final ChangeMapper changeMapper;
     @Qualifier("changeRestClient")
     private final RestClient restClient;
-    @Scheduled(fixedRate = 20, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.DAYS)
     public void getChange(){
         ResponseEntity<ChangeDto[]> json = restClient.get().retrieve().toEntity(ChangeDto[].class);
         List<ChangeEntity> changes = Arrays.stream(json.getBody())
