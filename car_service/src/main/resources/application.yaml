@@ -5,9 +5,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: "http://127.0.0.1:9090/realms/copyria"
+          issuer-uri: "http://keycloak:8080/realms/copyria"
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/db
+    url: jdbc:postgresql://database:5432/db
     username: sql
     password: sql
   cloud:
@@ -15,7 +15,7 @@ spring:
       default-binder: kafka
       kafka:
         binder:
-          brokers: 127.0.0.1:9092
+          brokers: kafka-broker:9092
           auto-create-topics: true
       bindings:
         on-car-deleted-event-out-0:
@@ -23,6 +23,6 @@ spring:
 app:
   apis:
     car-service:
-      base-url: "http://127.0.0.1:8081/"
+      base-url: "http://order_service:8081/"
 server:
   port: 8080

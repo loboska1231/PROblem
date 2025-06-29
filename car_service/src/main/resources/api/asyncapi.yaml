@@ -7,7 +7,7 @@ info:
 defaultContentType: application/json
 servers:
   local-connections:
-    host: localhost:9092
+    host: kafka-broker:9092
     protocol: kafka
     description: Local Kafka broker
 channels:
