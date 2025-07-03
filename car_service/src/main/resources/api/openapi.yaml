@@ -11,8 +11,6 @@ servers:
 security:
   - BearerAuth: []
 paths:
-
-
   /api/v1/cars:
     get:
       tags:

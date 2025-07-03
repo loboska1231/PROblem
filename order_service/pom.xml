@@ -38,13 +38,17 @@
         <api-package>org.copyria2.order_service.api.rest</api-package>
 
         <car-service-open-api-spec-location>
+<!--             E:\projects\exam2_copyria2123\car_service\src\main\resources\api\openapi.yaml-->
             ../car_service/src/main/resources/api/openapi.yaml
         </car-service-open-api-spec-location>
         <api-package>org.copyria2.order_service.client.rest</api-package>
 
         <zenwave.version>1.7.1</zenwave.version>
         <event-api-package>org.copyria2.order_service.api</event-api-package>
-        <asyncapi-spec-file>../car_service/src/main/resources/api/asyncapi.yaml</asyncapi-spec-file>
+        <asyncapi-spec-file>
+<!--            E:\projects\exam2_copyria2123\car_service\src\main\resources\api\asyncapi.yaml-->
+            ../car_service/src/main/resources/api/asyncapi.yaml
+        </asyncapi-spec-file>
     </properties>
 
     <dependencyManagement>
@@ -102,10 +106,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>

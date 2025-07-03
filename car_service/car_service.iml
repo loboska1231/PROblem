@@ -3,6 +3,7 @@
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$" dumb="true">
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/openapi/src/main/java/org/copyria2/carservice/api/rest" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/zenwave/src/main/java/org/copyria2/car_service/api" isTestSource="false" generated="true" />
     </content>
   </component>
 </module>
