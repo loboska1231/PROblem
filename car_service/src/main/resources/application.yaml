@@ -6,6 +6,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: "http://keycloak:8080/realms/copyria"
+#          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   datasource:
     url: jdbc:postgresql://database:5432/db
     username: sql
@@ -25,4 +26,4 @@ app:
     car-service:
       base-url: "http://order_service:8081/"
 server:
-  port: 8080
+  port: 8082

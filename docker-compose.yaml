@@ -1,4 +1,4 @@
-
+version: '3.8'
 services:
   database:
     image: postgres:latest
@@ -59,7 +59,7 @@ services:
       - keycloak-net
 
   keycloak:
-    image: quay.io/keycloak/keycloak:24.0.1
+    image: quay.io/keycloak/keycloak:24.0.5
     container_name: keycloak
     ports:
       - "9090:8080"
@@ -72,6 +72,9 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_IMPORT: /opt/keycloak/data/import/copyria_realm.json
+      KC_HOSTNAME_URL: http://localhost:9090
+      KC_HTTP_ENABLED: true
+      KC_PROXY: edge
     depends_on:
       - postgres-keycloak
     networks:
@@ -86,6 +89,8 @@ services:
     volumes:
       - ./backend:/app
     working_dir: /app
+    environment:
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/copyria
     command: >
       sh -c "java -jar car_service.jar"
     restart: on-failure
@@ -94,7 +99,7 @@ services:
       - data
       - kafka
     ports:
-      - "8080:8080"
+      - "8082:8082"
   order_service:
     build:
       context: .
@@ -102,6 +107,9 @@ services:
     volumes:
       - ./backend:/app
     working_dir: /app
+    environment:
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/copyria
+#      kc_iss: "http://keycloak:8080/realms/copyria"
     command: >
       sh -c "java -jar order_service.jar"
     restart: on-failure
