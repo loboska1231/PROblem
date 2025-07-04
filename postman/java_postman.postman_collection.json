@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "4b6c2fad-8eb8-4152-a32c-0a5637dc4a1a",
+		"name": "java_postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "41632654"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "getOrders",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": {
+										"accessTokenUrl": "http://localhost:9090/realms/copyria/protocol/openid-connect/token",
+										"authUrl": "http://localhost:9090/realms/copyria/protocol/openid-connect/auth",
+										"grant_type": "authorization_code_with_pkce",
+										"tokenName": "",
+										"redirect_uri": "https://oauth.pstmn.io/v1/callback",
+										"clientId": "web-client",
+										"useBrowser": false,
+										"addTokenTo": "header"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "currency",
+										"value": "USD",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"city\": \"Kiev\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}orders",
+									"host": [
+										"{{local}}orders"
+									],
+									"query": [
+										{
+											"key": "currency",
+											"value": "USD",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrder",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{local}}orders/1"
+							},
+							"response": []
+						},
+						{
+							"name": "getOrder+Params",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{local}}orders?currecy=USD",
+									"host": [
+										"{{local}}orders"
+									],
+									"query": [
+										{
+											"key": "currecy",
+											"value": "USD"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cars",
+					"item": [
+						{
+							"name": "getCars",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8082/api/v1/cars"
+							},
+							"response": []
+						},
+						{
+							"name": "getCar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{local2}}cars/1"
+							},
+							"response": []
+						},
+						{
+							"name": "getCarByOrderId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{local2}}cars/byOrder/1"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "setOrder",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"city\": \"dnipro\",\r\n  \"region\": \"dnipropetrovsk\",\r\n  \"price\": 21333,\r\n  \"currency\": \"USD\",\r\n  \"car\": {\r\n    \"brand\": \"bmw\",\r\n    \"model\": \"x5\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{local}}orders"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cars",
+					"item": [
+						{
+							"name": "setCar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"brand\": \"bmw\",\r\n  \"model\": \"x5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{local2}}cars"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "PATCH (UPDATE)",
+			"item": [
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"city\": \"dnipro\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{local}}/1"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "deleteOrder",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{local}}orders/1"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cars",
+					"item": [
+						{
+							"name": "deleteCar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{local}}cars/1"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": {
+			"scope": "",
+			"grant_type": "authorization_code_with_pkce",
+			"authUrl": "http://localhost:9090/realms/copyria/protocol/openid-connect/auth",
+			"clientId": "web-client",
+			"accessTokenUrl": "http://localhost:9090/realms/copyria/protocol/openid-connect/token",
+			"redirect_uri": "https://oauth.pstmn.io/v1/callback",
+			"addTokenTo": "header"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "{base-url}",
+			"value": "localhost:8081",
+			"type": "string"
+		},
+		{
+			"key": "local",
+			"value": "http://localhost:8081/",
+			"type": "default"
+		},
+		{
+			"key": "local2",
+			"value": "http://localhost:8082/api/v1/",
+			"type": "default"
+		}
+	]
+}
