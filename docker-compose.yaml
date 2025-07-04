@@ -33,8 +33,6 @@ services:
     ports:
       - "9092:9092"
       - "29092:29092"
-    networks:
-      - kafka
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker:19092,EXTERNAL://${DOCKER_HOST_IP:-${kafka-broker}}:9092,DOCKER://host.docker.internal:29092
@@ -45,7 +43,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-
+    networks:
+      - kafka
 
   postgres-keycloak:
     image: postgres:15
@@ -91,9 +90,9 @@ services:
       sh -c "java -jar car_service.jar"
     restart: on-failure
     networks:
+      - keycloak-net
       - data
       - kafka
-      - keycloak-net
     ports:
       - "8080:8080"
   order_service:
@@ -107,12 +106,11 @@ services:
       sh -c "java -jar order_service.jar"
     restart: on-failure
     networks:
+      - keycloak-net
       - data
       - kafka
-      - keycloak-net
     ports:
       - "8081:8081"
-
 volumes:
   postgres_data:
   psql-db:

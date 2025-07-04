@@ -51,7 +51,6 @@ public class SecurityConfig {
             return Collections.emptyMap();
         }
     }
-
     private List<String> extractRoles(Map<String, Object> realmAccess) {
         return (List<String>) realmAccess.getOrDefault("roles", Collections.emptyList());
     }
