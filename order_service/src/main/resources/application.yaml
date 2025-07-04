@@ -61,6 +61,6 @@ app:
     url: "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"
   apis:
     car-service:
-      base-url: "http://car_service:8082/"
+      base-url: "http://car_service:8081/"
 server:
   port: 8081
